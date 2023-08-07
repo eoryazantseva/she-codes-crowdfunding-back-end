@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Project
+from .serializers import ProjectSerializer
 
-# Create your views here.
+class ProjectList(APIView):
+
+    def get(self, request):   # we're defining the behaviour this view should enact when it receives an HTTP request of the GET variety
+        projects = Project.objects.all()    # this view retrieves a list of all projects from our db,
+        serializer = ProjectSerializer(projects, many=True)  # serializes them into JSON, and 
+        return Response(serializer.data) # sends that data back through the endpoint to the frontend.
