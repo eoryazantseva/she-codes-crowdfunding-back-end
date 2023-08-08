@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Project, Pledge
-from .serializers import ProjectSerializer, PledgeSerializer
+from .serializers import ProjectSerializer, PledgeSerializer, ProjectDetailSerializer
 from django.http import Http404
 from rest_framework import status
 
@@ -38,7 +38,7 @@ class ProjectDetail(APIView):
 
     def get(self, request, pk): # also tells our our view how to handle GET requsests. This method says that the way to do this is to:
         project = self.get_object(pk) #  get the data from the db
-        serializer = ProjectSerializer(project) # serialize the data to JSON
+        serializer = ProjectDetailSerializer(project) # serialize the data to JSON
         return Response(serializer.data) # return it as a response
     
 
