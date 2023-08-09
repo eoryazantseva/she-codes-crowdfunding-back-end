@@ -16,7 +16,7 @@ class ProjectList(APIView):
     def post(self, request):  # if a POST request comes through,
         serializer = ProjectSerializer(data=request.data) # ... it should load the data into serializer,...
         if serializer.is_valid():
-            serializer.save() # ...tell the serializer to save a new record to the DB,...
+            serializer.save(owner=request.user) # ...tell the serializer to save a new record to the DB,...
             return Response(  # ...respond with the JSON detailing what was saved and a status code 201 (successfully created)
                 serializer.data,
                 status=status.HTTP_201_CREATED
@@ -53,7 +53,7 @@ class PledgeList(APIView):
     def post(self, request):
         serializer = PledgeSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(supporter=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
