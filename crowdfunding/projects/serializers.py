@@ -19,3 +19,14 @@ class ProjectSerializer(serializers.ModelSerializer):  # we splitted rojectSeria
 
 class ProjectDetailSerializer(ProjectSerializer):
     pledges = PledgeSerializer(many=True, read_only=True)  # we specified related_name = pledges in the Pledges model, which means that it acts as an additional field in Project model. This way we can add a depiction of a list of pledges associated with each Project to that project JSON. This is called "inheritance".We define the regular ProjectSerializer first. Thenwe say, basically, "oh, and we also have a ProjectDetailSerializer - it is the same asthe ProjectSerializer, except it has a list of pledges too!"
+
+    def update(self, instance, validated_data): # we are telling the serializer how to perform an update on an existring instance of a Project. When it performs an update, it will get some validated data.
+        instance.title = validated_data.get('title', instance.title) # the serializer should go through each field on the instance, and try to get the new value from the validated_data. If it can't find a value in the validated_data, it can use the value that is already on the instance.
+        instance.description = validated_data.get('description',instance.description)
+        instance.goal = validated_data.get('goal', instance.goal)
+        instance.image = validated_data.get('image', instance.image)
+        instance.is_open = validated_data.get('is_open', instance.is_open)
+        instance.date_created = validated_data.get('date_created',instance.date_created)
+        instance.owner = validated_data.get('owner', instance.owner)
+        instance.save()
+        return instance

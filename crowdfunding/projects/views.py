@@ -3,10 +3,13 @@ from rest_framework.response import Response
 from .models import Project, Pledge
 from .serializers import ProjectSerializer, PledgeSerializer, ProjectDetailSerializer
 from django.http import Http404
-from rest_framework import status
+from rest_framework import status, permissions
+from .permissions import IsOwnerOrReadOnly
 
 
 class ProjectList(APIView):
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request):   # we're defining the behaviour this view should enact when it receives an HTTP request of the GET variety
         projects = Project.objects.all()    # this view retrieves a list of all projects from our db,
@@ -29,9 +32,16 @@ class ProjectList(APIView):
 
 class ProjectDetail(APIView):
 
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,  # We register IsAuthenticatedOrReadOnly,since we need a user to be logged in to know if they're allowed to edit a project
+        IsOwnerOrReadOnly   #we import our permission
+    ]
+
     def get_object(self, pk): # when this view gets called, the front end will be asking for info about a specific project. This method says when the view goes looking for a project, it should use the promary key of that project. The view should grab the project with the pk from the db.
         try: # added try/except block to our get_object method. It tells Python to attempt to retrieve the record from the db. Bit, if it encounters a problem in the process, it raises an HTTP404 error (404 code to the front end)
-            return Project.objects.get(pk=pk)
+            project = Project.objects.get(pk=pk)
+            self.check_object_permissions(self.request, project) # permissions check
+            return project
         except Project.DoesNotExist:
             raise Http404
         
@@ -42,8 +52,28 @@ class ProjectDetail(APIView):
         return Response(serializer.data) # return it as a response
     
 
+    def put (self, request, pk):
+        project = self.get_object(pk) # we hand in an existing instance to the serializer
+        serializer = ProjectDetailSerializer(
+            instance=project,
+            data=request.data,
+            partial=True # we tell that its ok to accept partial data
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_202_ACCEPTED
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
 
 class PledgeList(APIView):
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request):
         pledges = Pledge.objects.all()
