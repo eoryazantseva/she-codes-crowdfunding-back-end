@@ -9,6 +9,17 @@ class PledgeSerializer(serializers.ModelSerializer): #ModelSerializer is a class
         fields = '__all__'
 
 
+class PledgeDetailSerializer(PledgeSerializer):
+
+    def update(self, instance, validated_data): # we are telling the serializer how to perform an update on an existring instance of a Project. When it performs an update, it will get some validated data.
+        instance.amount = validated_data.get('amount', instance.amount) # the serializer should go through each field on the instance, and try to get the new value from the validated_data. If it can't find a value in the validated_data, it can use the value that is already on the instance.
+        instance.comment = validated_data.get('comment',instance.comment)
+        instance.anonymous = validated_data.get('anonymous', instance.anonymous)
+        instance.project = validated_data.get('project', instance.project)
+        instance.supporter = validated_data.get('supporter', instance.supporter)
+        instance.save()
+        return instance
+
 
 class ProjectSerializer(serializers.ModelSerializer):  # we splitted rojectSerializer in two: regular version and a detailed version, so that we can choose when we want to display the extra info.
     owner = serializers.ReadOnlyField(source='owner.id') # We are giving the serializer custom instructions for how it should handle the ownerfield on the Project model. We are saying that this field should be read-only. That means that users aren'tallowed to choose what value they set - our code is going to decide. Finally, we are saying that when the serializer gets handed data, it should find the owner in that data, grab the id field from that User object, and save that valuein the owner field. 
