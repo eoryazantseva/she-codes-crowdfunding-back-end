@@ -21,5 +21,4 @@ ENV SECRET_KEY "vHx2Q0Ry2eVBEubxMpGGscwjt9ucY9LgxdSMDNoPf0EukKYTAh"
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
-
-+CMD ["/code/run.sh"]
+CMD ["/code/run.sh"]
