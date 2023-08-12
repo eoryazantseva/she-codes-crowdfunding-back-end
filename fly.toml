@@ -1,4 +1,4 @@
-app = "she-codes-crowdfunding-back-end"
+app = "fly-builder-bitter-hill-7413"
 primary_region = "syd"
 console_command = "/code/manage.py shell"
 kill_signal = "SIGINT"
