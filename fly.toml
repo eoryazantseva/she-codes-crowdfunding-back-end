@@ -1,4 +1,4 @@
-app = "cs-wishfrog"
+app = "sc-wishfrog"
 primary_region = "syd"
 console_command = "/code/manage.py shell"
 kill_signal = "SIGINT"
