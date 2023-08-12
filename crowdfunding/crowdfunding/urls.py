@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('projects.urls')),
     path('', include('users.urls')),
     path('api-auth/', include('rest_framework.urls')), # URL for our log-in view, DRF supplies it for us. All we have to do is plug it into a URL.+ from .models import CustomUser+ from .serializers import CustomUserSerializer+ class CustomUserList(APIView):+   def get(self, request):+       users = CustomUser.objects.all()+       serializer = CustomUserSerializer(users, many=True)+       return Response(serializer.data)+   def post(self, request):+       serializer = CustomUserSerializer(data=request.data)+       if serializer.is_valid():+           serializer.save()+           return Response(serializer.data)+       return Response(serializer.errors)+ class CustomUserDetail(APIView):+   def get_object(self, pk):+       try:+           return CustomUser.objects.get(pk=pk)+       except CustomUser.DoesNotExist:+           raise Http404+   def get(self, request, pk):+       user = self.get_object(pk)+       serializer = CustomUserSerializer(user)+       return Response(serializer.data)from django.urls import pathfrom . import viewsurlpatterns = [    path('users/', views.CustomUserList.as_view()),    path('users/<int:pk>/', views.CustomUserDetail.as_view()),]
-
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 ]
