@@ -17,7 +17,7 @@ class Project(models.Model):
     )
 
 class Pledge(models.Model):
-    amount = models.IntegerField()
+    amount = models.IntegerField() # just a random comment
     comment = models.CharField(max_length=200)
     anonymous = models.BooleanField()
     project = models.ForeignKey(  # each Pledge needs to have the ID of a Project saved in this field. 
