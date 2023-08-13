@@ -83,6 +83,14 @@ class PledgeList(APIView):
     def post(self, request):
         serializer = PledgeSerializer(data=request.data)
         if serializer.is_valid():
+            project_id = serializer.validated_data['project'].id
+            project = Project.objects.get(id=project_id)
+
+            if project.owner == request.user:
+                return Response(
+                    {"detail": "Project owner cannot make a pledge to their own project."},
+                    status=status.HTTP_403_FORBIDDEN)
+            
             serializer.save(supporter=request.user)
             return Response(
                 serializer.data,
@@ -92,32 +100,6 @@ class PledgeList(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-    
-    # def put (self, request, pk):
-    #     pledge = self.get_object(pk)
-    #     if pledge.supporter == request.user:
-    #         serializer = PledgeSerializer(
-    #             instance=pledge, 
-    #             data=request.data, 
-    #             partial=True)
-    #         if serializer.is_valid():
-    #             serializer.save()
-    #             return Response(
-    #                 serializer.data,
-    #                 status=status.HTTP_202_ACCEPTED
-    #             )
-    #         return Response(
-    #             serializer.errors,
-    #             status=status.HTTP_400_BAD_REQUEST
-    #         )
-    #     else:
-    #         return Response(
-    #             {"detail": "You do not have permission to modify this pledge."},
-    #             status=status.HTTP_403_FORBIDDEN
-    #         )
-        
-
-
 
 
 
