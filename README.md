@@ -15,7 +15,6 @@ Together, we'll cultivate sustainable joy and make every birthday an eco-friendl
 
 ## Features
 
-{{ The features your MVP will include. (Remember this is a working document, you can change these as you go!) }}
 * User Accounts: WishFrog offers a seamless user account creation process, allowing individuals to register with unique usernames, email addresses, and securely encrypted passwords. These accounts provide access to a personalized dashboard to manage crowdfunding campaigns.
 * Project Creation: SUsers can create birthday campaigns that focus on meaningful gifts aligned with a child's dreams. Each campaign will include essential attributes such as the project title, the project owner (the user who initiated the campaign), a detailed description, an inspiring image, the target amount to be fundraised, and an option to indicate if the project is currently open to accepting new supporters. The creation date of each campaign will be prominently displayed, inspiring early engagement.
 * Pledging Support: family members, friends and enthusiastic supporters can make pledges to back birthday campaigns. Each pledge will encompass crucial details, including the pledged amount, the campaign it supports, the name of the supporter, an option for anonymous pledges, and a heartfelt comment accompanying the pledge.
@@ -25,8 +24,6 @@ Together, we'll cultivate sustainable joy and make every birthday an eco-friendl
 * Responsive Design: Funducation's website will be fully responsive, delivering a seamless experience across desktops, tablets, and mobile devices.
 
 ### Stretch Goals
-
-{{ Outline three features that will be your stretch goals if you finish your MVP }}
 
 * Social Media Integration: Implement social media integration to allow users to easily share their favorite projects and pledges with their friends, family, and followers. 
 * Gift Tracking and Follow-ups: Implement a tracking system to monitor gift usage and follow up with campaign owners to see how the gifts have impacted the child's life. This feature will help showcase the positive outcomes of sustainable and meaningful gift-giving.
@@ -40,9 +37,8 @@ Together, we'll cultivate sustainable joy and make every birthday an eco-friendl
 | POST | projects/ | Create a new project | project object | 201 | User must be logged in. |
 
 ## Database Schema
-{{ Insert your database schema }}
 
-![image info goes here](./docs/image.png)
+![image info goes here](erd.drawio.png)
 
 ## Wireframes
 {{ Insert your wireframes }}
@@ -50,20 +46,67 @@ Together, we'll cultivate sustainable joy and make every birthday an eco-friendl
 ![image info goes here](./docs/image.png)
 
 ## Colour Scheme
-{{ Insert your colour scheme }}
+
+
+
 
 ![image info goes here](./docs/image.png)
 
 ## Fonts
-{{ outline your heading & body font(s) }}
+
+Heading Font Family: Quattrocento Regular 400,
+Defaukt Font Family: Lora Regular 400
 
 ## Submission Documentation
 {{ Fill this section out for submission }}
 
-Deployed Project: [Deployed website](http://linkhere.com/)
+Deployed Project: [Deployed website](https://sc-wishfrog.fly.dev/projects/)
 
 ### How To Run
-{{ What steps to take to run this code }}
+
+1. Clone the repository onto your local computer. Go to the desired directory and execute the given command:
+
+`git clone https://github.com/eoryazantseva/she-codes-crowdfunding-back-end`
+
+2. In the terminal, change directory into the repo you just cloned down:
+
+`cd she-codes-crowdfunding-back-end
+
+3. Set up virtual environment. The name of the virtual environnment is your choice. We'll call it "venv":
+
+`python -m venv venv`
+
+4. Activate the environment. 
+
+Windows command: 
+
+`. venv/Scripts/activate` 
+
+Mac command:
+
+`source venv/bin/activate`
+
+5. Install the requirements:
+
+`python -m pip install -r requirements.txt`
+
+6. Open the repo in VS Code or your preferred editor: 
+
+`code .`
+
+7. Make migrations. To do that you need to change the directories so that you're next to the "manage.py" file:
+
+`cd she-codes-crowdfunding-back-end`
+
+Now make the initial migrations:
+`python manage.py migrate`
+
+8. Run the server:
+
+`python manage.py runserver`
+
+9. Open the development server link terminal gives you. In our case it is http://127.0.0.1:8000
+
 
 ### Updated Database Schema
 {{ Updated schema }}
@@ -76,7 +119,47 @@ Deployed Project: [Deployed website](http://linkhere.com/)
 ![image info goes here](./docs/image.png)
 
 ### How To Register a New User
-{{ Step by step instructions for how to register a new user and create a new project (i.e. endpoints and body data). }}
+
+1. Launch Insomnia and ensure you are linked to the server API.
+
+2. Select the HTTP POST method and input the registration endpoint URL: https://sc-wishfrog.fly.dev/users/
+
+3. Put the new user JSON data (new user name, email address, password) in the request body like this:
+
+`{
+  "username": "new_user_name",
+  "email": "new_user_email@example.com",
+  "password": "new_user_password"
+}`
+
+4. Click "Send" button to execute the request.
+
+5. Upon successful completion, you will obtain a response displaying a status code 201 Created, as well as new user's data (in JSON format).
+
+
+### How To Create a New Project
+
+1. Launch Insomnia and ensure you are linked to the server API.
+
+2. Select the HTTP POST method and input the registration endpoint URL: https://sc-wishfrog.fly.dev/projects/
+
+3. In the Auth folder choose "Bearer Token" and insert the token you received after user registration. 
+
+4.  Put the new project JSON data (new project title, description, goal, image, is_open, date_created) in the request body like this:
+
+`{
+  "title": "New Project",
+  "description": "Description of new project.",
+  "goal": 300,
+  "image": "https://via.placeholder.com/300.jpg",
+  "is_open": true,
+  "date_created": "2023-08-20T14:28:23.382748Z",
+}
+`
+Project id will be generated automatically,  and owner id will be identified (only authorized users with tokens can create new projects).
+
+
+4. Upon successful completion, you will obtain a response displaying a status code 201 Created, as well as new project's data (in JSON format).
 
 ### Screenshots
 * [] A screenshot of Insomnia, demonstrating a successful GET method for any endpoint.
