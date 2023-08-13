@@ -67,7 +67,7 @@ Defaukt Font Family: Lora Regular 400
 ## Submission Documentation
 {{ Fill this section out for submission }}
 
-Deployed Project: [Deployed website](https://sc-wishfrog.fly.dev/projects/)
+Deployed Project: [WishFrog](https://sc-wishfrog.fly.dev/projects/)
 
 ### How To Run
 
