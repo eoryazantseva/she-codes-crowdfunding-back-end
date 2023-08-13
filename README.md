@@ -33,8 +33,14 @@ Together, we'll cultivate sustainable joy and make every birthday an eco-friendl
 
 | HTTP Method | Url | Purpose | Request Body | Successful Response Code | Authentication <br /> Authorization
 | --- | ------- | ------ | ---- | -----| ----|
-| GET | projects/ | Return all projects | N/A | 200 | N/A |
-| POST | projects/ | Create a new project | project object | 201 | User must be logged in. |
+| GET | /projects/ | Return all projects | N/A | 200 | N/A |
+| POST | /projects/ | Create a new project | project object | 201 | User must be logged in. |
+| GET | /projects/1/ | Returns the project with ID of "1" | N/A | 200 | N/A |
+| PUT | /projects/1/ | Updates the project with ID of "1" | project object | 200 | User must be logged in. User must be the project owner|
+| POST | /pledges/ | Create a new pledge | pledge object | 201 | User must be logged in. User must not be the owner of the project |
+| GET | /pledges/1/ | Get the pledge with ID of "1"| N/A | 200 | N/A |
+| DELETE | /pledges/1/ | Deletes the pledge with ID of "1" | N/A| 200 | User must be logged in. User must be the pledge owner|
+| POST | /users/ | Create a new user | user object | 201 | N/A |
 
 ## Database Schema
 
@@ -55,6 +61,7 @@ Together, we'll cultivate sustainable joy and make every birthday an eco-friendl
 ## Fonts
 
 Heading Font Family: Quattrocento Regular 400,
+
 Defaukt Font Family: Lora Regular 400
 
 ## Submission Documentation
@@ -162,11 +169,15 @@ Project id will be generated automatically,  and owner id will be identified (on
 4. Upon successful completion, you will obtain a response displaying a status code 201 Created, as well as new project's data (in JSON format).
 
 ### Screenshots
-* [] A screenshot of Insomnia, demonstrating a successful GET method for any endpoint.
-![image info goes here](./docs/image.png)
+GET request (Get all users)
 
-* [] A screenshot of Insomnia, demonstrating a successful POST method for any endpoint.
-![image info goes here](./docs/image.png)
+<img width="898" alt="image" src="https://github.com/eoryazantseva/she-codes-crowdfunding-back-end/assets/93800981/c1f7cdb4-9cf3-4da0-b37e-833cd991167c">
+
+
+POST request (Create new user)
+
+<img width="896" alt="image" src="https://github.com/eoryazantseva/she-codes-crowdfunding-back-end/assets/93800981/f65c59e6-3259-4834-863a-6a7a7a25491b">
+
 
 * [] A screenshot of Insomnia, demonstrating a token being returned.
-![image info goes here](./docs/image.png)
+<img width="897" alt="image" src="https://github.com/eoryazantseva/she-codes-crowdfunding-back-end/assets/93800981/759c0c9f-7aa0-4272-91d3-acd0df278cb9">
