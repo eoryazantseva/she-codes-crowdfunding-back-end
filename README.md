@@ -115,15 +115,6 @@ Now make the initial migrations:
 9. Open the development server link terminal gives you. In our case it is http://127.0.0.1:8000
 
 
-### Updated Database Schema
-{{ Updated schema }}
-
-![image info goes here](./docs/image.png)
-
-### Updated Wireframes
-{{  Updated wireframes }}
-
-![image info goes here](./docs/image.png)
 
 ### How To Register a New User
 
@@ -179,5 +170,6 @@ POST request (Create new user)
 <img width="896" alt="image" src="https://github.com/eoryazantseva/she-codes-crowdfunding-back-end/assets/93800981/f65c59e6-3259-4834-863a-6a7a7a25491b">
 
 
-* [] A screenshot of Insomnia, demonstrating a token being returned.
+A screenshot of Insomnia, demonstrating a token being returned.
+
 <img width="897" alt="image" src="https://github.com/eoryazantseva/she-codes-crowdfunding-back-end/assets/93800981/759c0c9f-7aa0-4272-91d3-acd0df278cb9">
