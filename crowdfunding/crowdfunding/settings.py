@@ -74,11 +74,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    # Add the domains or origins that should be allowed to make cross-origin requests.
-    # For development, you can set it to allow all origins:
-    'http://localhost:5173',  # Example for a React development server
-]
 
 ROOT_URLCONF = 'crowdfunding.urls'
 
