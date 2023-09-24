@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.apps import apps
 
+
 class PledgeSerializer(serializers.ModelSerializer): #ModelSerializer is a class provided by DRF, it's smart enough to inspect our model and figure out for itself how each field should be converted to JSON. We give our PledgeSerializer Class some "meta-info": what model should it serialize, and which fieldsmshould it include.
     supporter = serializers.ReadOnlyField(source='supporter.id')
     
@@ -37,7 +38,8 @@ class ProjectDetailSerializer(ProjectSerializer):
         instance.goal = validated_data.get('goal', instance.goal)
         instance.image = validated_data.get('image', instance.image)
         instance.is_open = validated_data.get('is_open', instance.is_open)
-        # instance.date_created = validated_data.get('date_created',instance.date_created)
-        # instance.owner = validated_data.get('owner', instance.owner)
+        instance.date_created = instance.date_created
+        instance.owner = instance.owner
         instance.save()
+
         return instance
