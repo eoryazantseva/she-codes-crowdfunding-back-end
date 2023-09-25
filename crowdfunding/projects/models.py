@@ -9,7 +9,7 @@ class Project(models.Model):
     goal = models.IntegerField()
     image = models.URLField()
     is_open = models.BooleanField()
-    date_created = models.DateTimeField(editable=False)
+    date_created = models.DateTimeField()
     owner = models.ForeignKey( # each Project needs to have the ID of a User saved in this field. we are using a ForeignKey field to link two models togetherwith a many-to-one relation
         get_user_model(),
         on_delete=models.CASCADE,
